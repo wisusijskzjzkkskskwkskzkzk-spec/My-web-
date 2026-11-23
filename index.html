@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Laboratorio Digital | Código & Redes</title>
+    <style>
+        :root {
+            --color-principal: #06b6d4;
+            --fondo: #0f172a;
+            --tarjeta: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body {
+            background-color: var(--fondo);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .contenedor {
+            max-width: 440px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .tarjeta {
+            background-color: var(--tarjeta);
+            border: 1px solid #334155;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .perfil { text-align: center; }
+        .avatar {
+            width: 80px; height: 80px;
+            background-color: var(--color-principal);
+            color: #0f172a;
+            border-radius: 50%;
+            margin: 0 auto 12px auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: bold;
+        }
+        h1 { font-size: 22px; color: var(--color-principal); margin-bottom: 6px; }
+        h2 { font-size: 17px; color: var(--color-principal); margin-bottom: 12px; }
+        p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+        .typewriter {
+            font-family: monospace;
+            color: #4ade80;
+            font-size: 13px;
+            min-height: 20px;
+            margin-bottom: 10px;
+        }
+        .botones-fila {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        button, .btn-link {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background-color: var(--color-principal);
+            color: #0f172a;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        .btn-borde {
+            background-color: transparent;
+            color: var(--color-principal);
+            border: 1px solid var(--color-principal);
+        }
+        .proyecto {
+            background-color: #0f172a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--color-principal);
+        }
+        .proyecto h3 { font-size: 15px; margin-bottom: 4px; }
+        .caja-resultado {
+            background-color: #0f172a;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            text-align: center;
+            color: #4ade80;
+            margin-bottom: 10px;
+            word-break: break-all;
+            border: 1px dashed #334155;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <!-- TARJETA PRINCIPAL -->
+        <div class="tarjeta perfil">
+            <div class="avatar">&gt;_</div>
+            <h1>Mi Laboratorio Digital</h1>
+            <div class="typewriter" id="maquina"></div>
+            <p>Programando en Python, Kali Linux y desarrollo web directo desde Android.</p>
+            
+            <div class="botones-fila">
+                <button onclick="cambiarTema('#06b6d4')">Cyan</button>
+                <button class="btn-borde" onclick="cambiarTema('#22c55e')">Matrix</button>
+                <button class="btn-borde" onclick="cambiarTema('#a855f7')">Morado</button>
+            </div>
+        </div>
+
+        <!-- INFO DE RED DEL VISITANTE -->
+        <div class="tarjeta">
+            <h2>Tu Conexión Actual</h2>
+            <div class="caja-resultado" id="info-ip">Detectando tu IP pública...</div>
+        </div>
+
+        <!-- TARJETA DE PROYECTOS -->
+        <div class="tarjeta">
+            <h2>Mis Proyectos en Python</h2>
+            <div class="proyecto">
+                <h3>1. Escáner de Puertos y Red</h3>
+                <p>Automatización de Nmap en Kali Linux para auditar puertos abiertos y servicios.</p>
+            </div>
+            <div class="proyecto">
+                <h3>2. Auditor de Cabeceras HTTP</h3>
+                <p>Script en Python que verifica medidas de seguridad en servidores web.</p>
+            </div>
+        </div>
+
+        <!-- GENERADOR DE CONTRASEÑAS -->
+        <div class="tarjeta">
+            <h2>Generador de Contraseñas</h2>
+            <div class="caja-resultado" id="clave">Toca generar para crear una clave</div>
+            <div class="botones-fila">
+                <button onclick="generarClave()">Generar</button>
+                <button class="btn-borde" onclick="copiarTexto('clave')">Copiar</button>
+            </div>
+        </div>
+
+        <!-- CODIFICADOR BASE64 -->
+        <div class="tarjeta">
+            <h2>Cifrado Rápido Base64</h2>
+            <input type="text" id="entrada-b64" placeholder="Escribe un texto o código Base64...">
+            <div class="caja-resultado" id="salida-b64">Resultado aquí</div>
+            <div class="botones-fila">
+                <button onclick="codificarB64()">Codificar</button>
+                <button class="btn-borde" onclick="decodificarB64()">Decodificar</button>
+            </div>
+        </div>
+
+        <!-- BOTÓN DE GITHUB -->
+        <div class="tarjeta">
+            <h2>Conecta Conmigo</h2>
+            <div class="botones-fila">
+                <a href="https://github.com" target="_blank" class="btn-link">Visitar mi GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Efecto máquina de escribir
+        const frase = "root@kali:~# iniciando_sistema...";
+        let idx = 0;
+        function escribir() {
+            if (idx < frase.length) {
+                document.getElementById("maquina").innerHTML += frase.charAt(idx);
+                idx++;
+                setTimeout(escribir, 70);
+            }
+        }
+        escribir();
+
+        // Detectar IP pública del visitante
+        fetch("https://ipify.org")
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById("info-ip").innerText = "IP Pública: " + data.ip;
+            })
+            .catch(() => {
+                document.getElementById("info-ip").innerText = "Modo local / Sin detección externa";
+            });
+
+        async function preguntarIA() {
+            const input = document.getElementById("pregunta-ia");
+            const caja = document.getElementById("respuesta-ia");
+            const pregunta = input.value.trim();
+            if (!pregunta) return;
+            
+            caja.innerText = "Pensando...";
+            try {
+                const res = await fetch("https://pollinations.ai" + encodeURIComponent(pregunta));
+                const texto = await res.text();
+                caja.innerText = texto;
+            } catch (e) {
+                caja.innerText = "Error de conexión. Verifica tu internet.";
+            }
+        }
+
+        function cambiarTema(color) {
+            document.documentElement.style.setProperty('--color-principal', color);
+        }
+
+        function generarClave() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
+            let pass = "";
+            for (let i = 0; i < 14; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("clave").innerText = pass;
+        }
+
+        function copiarTexto(id) {
+            const texto = document.getElementById(id).innerText;
+            if (!texto.includes("Toca generar")) {
+                navigator.clipboard.writeText(texto);
+                alert("¡Copiado al portapapeles!");
+            }
+        }
+
+        function codificarB64() {
+            const txt = document.getElementById("entrada-b64").value;
+            if (txt) document.getElementById("salida-b64").innerText = btoa(unescape(encodeURIComponent(txt)));
+        }
+
+        function decodificarB64() {
+            const txt = document.getElementById("entrada-b64").value;
+            try {
+                if (txt) document.getElementById("salida-b64").innerText = decodeURIComponent(escape(atob(txt)));
+            } catch (e) {
+                document.getElementById("salida-b64").innerText = "Texto Base64 inválido";
+            }
+        }
+    </script>
+</body>
+</html>
